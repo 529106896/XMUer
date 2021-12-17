@@ -56,7 +56,7 @@
 
 项目使用的Nut包和对应版本如下：
 
-![image-20211218021128852](C:\Users\529106896\AppData\Roaming\Typora\typora-user-images\image-20211218021128852.png)
+![NutPackage](NutPackage.png)
 
 
 
