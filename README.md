@@ -7,7 +7,7 @@
 
 
 
-本项目基于https://github.com/lhanlhanlhan/xmuer开发，在该项目基础上添加或修改以下功能：
+本项目基于https://github.com/lhanlhanlhan/xmuer 开发，在该项目基础上添加或修改以下功能：
 
 
 
