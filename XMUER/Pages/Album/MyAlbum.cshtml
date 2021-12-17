@@ -1,0 +1,304 @@
+﻿
+@model XMUER.Models.ModelsList.AlbumListModel
+@{ ViewData["Title"] = "我的相册"; }
+@*相册 JS*@
+<script>$(document).ready(() => {
+    // 添加左边菜单栏选中
+    $('#mnuMyAlbum').addClass("active");
+})</script>
+@*上传文件相关 JS*@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
+<script>$('document').ready(function () {
+        $('#fileUpload').fileinput({
+            showUpload: false,
+        })
+    })
+</script>
+@*我的相册 页面*@
+<div class="card">
+    <div class="card-header">
+        我的相册
+        <button type="button" class="btn btn-primary ml-3" data-toggle="collapse" data-target="#uploadPhotoCollapse" aria-expanded="false" aria-controls="uploadPhotoCollapse">
+            上传照片
+        </button>
+        <button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#createAlbumCollapse" aria-expanded="false" aria-controls="createAlbumCollapse">
+            新建相册
+        </button>
+    </div>
+    <div class="card-body">
+        @*上传相片*@
+        <div class="collapse mb-3" id="uploadPhotoCollapse">
+            <div class="card card-body">
+                <div class="form-group">
+                    <label for="selAlbum">选择相册</label>
+                    <select class="form-control" id="selAlbum">
+                        @{ if (Model.allAlbums.Count > 0)
+                           {
+                               foreach (var album in Model.allAlbums)
+                               {
+                                    <option value="@album.ID">@album.Name</option> }
+                           }
+                        }
+                    </select>
+                </div>
+                <form method="post" id="frmUploadPhoto" enctype="multipart/form-data">
+                    <input type="file" name="iFormFile" accept="image/*" id="fileUpload" />
+                    <hr />
+                    <button type="button" class="btn btn-primary" id="btnSubmit">上传</button>
+                </form>
+            </div>
+        </div>
+        <script>
+            $('#btnSubmit').click(function () {
+                var albumId = document.getElementById("selAlbum")
+                    .options[document.getElementById("selAlbum").selectedIndex].value;
+
+                var formData = new FormData($('#frmUploadPhoto')[0])
+
+                $.ajax({
+                    url: "/home/album/" + albumId,
+                    type: 'post',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (true == data.success) {
+                            alert("上传成功。");
+                            window.location.href = "/home/album";
+                        } else {
+                            alert("上传失败，因为：" + data.msg);
+                            window.location.href = "/home/album";
+                        }
+                    },
+                    error: function (data) {
+                        if (true == data.success) {
+                            alert("上传成功。");
+                            window.location.href = "/home/album";
+                        } else {
+                            alert("上传失败，因为：" + data.msg);
+                            window.location.href = "/home/album";
+                        }
+                    }
+                });
+            })
+        </script>
+        @*新建相册*@
+        <div class="collapse mb-3" id="createAlbumCollapse">
+            <div class="card card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="selAlbum">新相册名</label>
+                        <input type="text" class="form-control" id="txtAlbumName">
+                    </div>
+                    <button type="button" class="btn btn-warning" id="btnCreateAlbum">创建</button>
+                </form>
+            </div>
+        </div>
+        <script>
+            $('#btnCreateAlbum').click(function () {
+                var albumName = $('#txtAlbumName').val();
+                $.ajax({
+                    url: "/home/album",
+                    type: 'post',
+                    data: JSON.stringify({ Name: albumName }),
+                    dataType: "json",
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (true == data.success) {
+                            alert("创建相册成功。");
+                            window.location.href = "/home/album";
+                        } else {
+                            alert("创建相册失败，因为：" + data.msg);
+                            window.location.href = "/home/album";
+                        }
+                    },
+                    error: function (data) {
+                        if (true == data.success) {
+                            alert("创建相册成功。");
+                            window.location.href = "/home/album";
+                        } else {
+                            alert("创建相册失败，因为：" + data.msg);
+                            window.location.href = "/home/album";
+                        }
+                    }
+                });
+            })
+        </script>
+        @*显示相册*@
+        <div class="card-columns" style="column-count: 4">
+            @{ 
+                if (Model.albums.Count > 0)
+                {
+                    foreach (var album in Model.albums)
+                    { @*相册视图*@
+                        <div class="card">
+                            <img src="@Url.Content(@album.Picture)" class="img-fluid" />
+                            <div class="card-body media-body">
+                                <a href="@Url.Content("~/Album/AlbumContent?albumId=" + album.ID)" class="card-title text-black-50">@album.Name</a>
+                                <div style="margin-left: 53%">
+                                    <button type="button" value="@album.ID" class="btn btn-warning modifyBtn" style="padding: revert" data-toggle="modal" data-target="#exampleModalCenter">编辑</button>
+                                    <button type="button" value="@album.ID" class="btn btn-danger btnDel" style="padding: revert">删除</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">修改相册</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <!--修改相册信息-->
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">封面</label>
+                            <div class="col-sm-9">
+                                <select class="custom-select my-1 mr-sm-2" id="albumPage">
+                                    <option selected>选择封面...</option>
+                                    <option value="../album/album1.png">封面1</option>
+                                    <option value="../album/album2.png">封面2</option>
+                                    <option value="../album/album3.png">封面3</option>
+                                    <option value="../album/album4.png">封面4</option>
+                                    <option value="../album/album5.png">封面5</option>
+                                    <option value="../album/album6.png">封面6</option>
+                                    <option value="../album/timg.png">默认封面</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">相册名称</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="albumName" placeholder="相册名称">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">封面预览</label>
+                            <div class="col-sm-9">
+                                <img id="show" src="~/album/timg.png" class="card-img-top img-thumbnail" alt="Card image cap">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-10" style="margin-left:65%">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                <button id="btnAlbumSubmit" type="submit" class="btn btn-primary">修改</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $("#albumPage").change(function () {
+                var albumPages = document.getElementById('albumPage');
+                var index = albumPages.selectedIndex;
+                var showImage = document.getElementById("show");
+                if (index === 0)
+                    showImage.src = "../album/timg.png";
+                else
+                    showImage.src = albumPages.options[index].value;
+            })
+        </script>
+        <script>
+            $(".modifyBtn").click(function() {
+                document.getElementById('btnAlbumSubmit').value = $(this).val();
+                var albumName = $(this).parent().siblings()[0].innerHTML;
+                var albumPage = $(this).parent().parent().siblings()[0].src;
+                document.getElementById('albumName').value = albumName;
+                document.getElementById('show').src = albumPage;
+                //console.log(albumPage);
+            })
+        </script>
+        <script>
+            $("#btnAlbumSubmit").click(function() {
+                var albumId = document.getElementById('btnAlbumSubmit').value;
+                var albumPages = document.getElementById('albumPage');
+                var index = albumPages.selectedIndex;
+                var albumPage = albumPages.options[index].value;
+                var albumName = document.getElementById('albumName').value;
+                var formData = new FormData();
+                formData.append("albumName", albumName);
+                formData.append("albumPageUrl", albumPage);
+                console.log(formData);
+                $.ajax({
+                    url: "/home/album/" + albumId,
+                    type: 'put',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (true === data.success) {
+                            window.location.href = "/home/album";
+                        } else {
+                            alert("修改失败，因为" + data.msg);
+                        }
+                    },
+                    error: function (data) {
+                        if (true === data.success) {
+                            window.location.href = "/home/album";
+                        } else {
+                            alert("修改失败，因为" + data.msg);
+                        }
+                    }
+
+                });
+                //console.log(albumPage);
+                //console.log(albumName);
+                //console.log(albumId);
+                //console.log(index);
+            })
+        </script>
+        <script>
+            $(".btnDel").click(function () {
+                var albumId = $(this).val();
+                var r = confirm('确定删除此相册？');
+                if (r === true) {
+                    $.ajax({
+                        url: "/home/album/" + albumId,
+                        type: 'delete',
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            if (true === data.success) {
+                                alert("删除成功");
+                                window.location.href = "/home/album";
+                            } else {
+                                alert("删除失败");
+                                window.location.href = "/home/album";
+                            }
+
+                        }
+                    });
+                }
+            })
+        </script>
+    </div>
+    <div class="card-footer">
+        <a class="btn btn-light" style="margin-left:20px" id="upPage">
+            上一页
+        </a>
+        <a class="btn btn-light" style="margin-left:20px" id="downPage">
+            下一页
+        </a>
+    </div>
+</div>
+
+<script>var page = 1;
+    $('#upPage').click(function () {
+        page -= 1;
+        if (page == 0) {
+            page = 1;
+        }
+        window.location.href = "/home/album?pageLimit=4&pageIndex=" + page;
+    });
+    $('#downPage').click(function () {
+        page += 1;
+        window.location.href = "/home/album?pageLimit=4&pageIndex=" + page;
+    });</script>

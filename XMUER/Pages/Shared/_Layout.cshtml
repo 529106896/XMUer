@@ -1,0 +1,364 @@
+﻿@using Microsoft.AspNetCore.Antiforgery
+@using Microsoft.AspNetCore.Http
+@inject IAntiforgery Xsrf
+
+@functions
+{
+    public string GetAntiXsrfRequestToken()
+    {
+        if (Model.HttpContext != null)
+        {
+            return Xsrf.GetAndStoreTokens(Model.HttpContext).RequestToken;
+        }
+        return null;
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XMUer > @ViewData["Title"]</title>
+    
+    @* CSS *@
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    
+    @* JS Lib *@
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.11.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+</head>
+<body>
+    <script>
+        function logout() {
+            $.ajax({
+                url: "/home/user/logout",
+                type: 'post',
+                contentType: false,
+                success: function (data) {
+                    //console.log(123);
+                    //console.log(data.success);
+                    if (data.success) {
+
+                        window.location.replace("/SignIn");
+                    }
+                },
+            })
+        }
+    </script>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <span class="navbar-brand"><strong>XMUer</strong></span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapse" aria-controls="collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse collapse" id="collapse">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0 han-navbar-list">
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/Index">主页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/About">关于</a>
+                </li>
+                @*@{
+                        if (Context.Session.GetString("userName") == null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/SignIn">登录</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/SignUp">注册</a>
+                            </li>
+                        }
+                    }*@
+            </ul>
+
+            @{
+                string name = Context.Session.GetString("userName");
+                if (name != null)
+                {
+                    <ul class="navbar-nav navbar-right">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="False">
+                                @name
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="~/Private/UserHome">个人主页</a>
+                                <a class="dropdown-item" href="~/Private/UserInfo">我的资料</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:logout();">登出</a>
+                            </div>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="navbar-nav navbar-right han-navbar-list">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/SignIn">登录</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/SignUp">注册</a>
+                        </li>
+                    </ul>
+                }
+            }
+        </div>
+    </nav>
+    <partial name="_CookieConsentPartial" />
+    <div class="d-flex" id="wrapper">
+        <div class="border-right" id="sidebar-wrapper">
+            <section style="width: 200px">
+                <ul class="sidebar-menu">
+                    <li class="sidebar-header">
+                        欢迎您
+                        @{
+                            string username = Context.Session.GetString("userName");
+                            if (username != null)
+                            {
+                                <strong><i>@username</i></strong>
+                            }
+                            else
+                            {
+                                <strong>游客</strong>
+                            }
+                        }
+                    </li>
+                    <li id="mnuHome">
+                        <a href="/">
+                            <i class="fa fa-home"></i> <span>XMUer首页</span> <i class="fa fa-angle-right pull-right"></i>
+                        </a>
+                    </li>
+                    <li id="mnuPersonalCentre" class="sidebar-dropdown">
+                        <a href="#">
+                            <i class="fa fa-user"></i>
+                            <span class="menu-text">个人中心</span>
+                            <i class="fa fa-angle-right pull-right"></i>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li id="mnuPersonalHome">
+                                    <a href="~/Private/UserHome">
+                                        <i class="fa fa-book"></i>
+                                        <span>个人主页</span>
+                                        <i class="fa fa-angle-right pull-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li id="mnuPersonalInfo">
+                                    <a href="~/Private/UserInfo">
+                                        <i class="fa fa-table"></i>
+                                        <span>我的资料</span>
+                                        <i class="fa fa-angle-right pull-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="mnuMyState">
+                        <a href="/Status/StatusList">
+                            <i class="fa fa-file-text"></i> <span>状态分享</span> <i class="fa fa-angle-right pull-right"></i>
+                        </a>
+                    </li>
+                    <li id="mnuMyAlbum">
+                        <a href="/home/album">
+                            <i class="fa fa-photo"></i> <span>我的相册</span> <i class="fa fa-angle-right pull-right"></i>
+                        </a>
+                    </li>
+                    <li id="mnuFriends">
+                        <a href="/home/user/college?value=信息学院">
+                            <i class="fa fa-users"></i> <span>找同学</span> <i class="fa fa-angle-right pull-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </div>
+        <div id="page-content-wrapper">
+            <div class="container body-content">
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; 2021 - DotNet Project</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script>$.sidebarMenu($('.sidebar-menu'))</script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/tinymce/5.5.1/tinymce.min.js"></script>
+    <script>
+    tinymce.init({
+            selector: '.tinymce',
+            plugins: "codesample table link paste code preview help",
+            toolbar: 'undo redo paste | styleselect forecolor backcolor bold italic codesample link table | alignleft aligncenter alignright bullist numlist | code preview help', menubar: false
+        });
+    </script>
+    <!-- tinyMCE编辑器载入内容与获取内容 -->
+    <script>
+            function tinyMCEFill(index) {
+                content = $('#html-content-' + (index + 1).toString()).html();
+                tinyMCE.editors[parseInt(index)].setContent(content);
+            }
+
+            function tinyMCESave(index, id) {
+                var content = tinyMCE.editors[parseInt(index)].getContent();
+
+                if (content == null || content == "") {
+                    alert('输入状态为空！');
+                }
+                else {
+                    $("#submit-" + (index+1).toString()).prop("disabled", true);
+                    var formData = new FormData();
+                    formData.append('content', content);
+                    $.ajax({
+                        type: "POST",
+                        url: "/Status/StatusEdit?id=" + id + "&edit=1",
+                        data: formData,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        headers:
+                        {
+                            "RequestVerificationToken": '@GetAntiXsrfRequestToken()'
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            alert('保存成功。');
+                            setTimeout(function(){ location.reload(); }, 500);
+
+                        },
+                        error: function (err) {
+                            console.error(err);
+                            alert('保存失败。');
+                        }
+                    });
+                    $("#submit-" + (index + 1).toString()).prop("disabled", false);
+
+                }
+            }
+    </script>
+
+    <!-- 新建状态页面的发布与暂存按钮 -->
+    <script>
+            $('#post-status').click(function () {
+                var content = tinyMCE.editors[0].getContent();
+                if (content == null || content == "") {
+                    alert('输入状态为空！');
+                }
+                else {
+                    $("#submit").prop("disabled", true);
+                    var formData = new FormData();
+                    formData.append('content', content);
+                    $.ajax({
+                        type: "POST",
+                        url: $("#form").context.URL + "&post=1",
+                        data: formData,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        headers:
+                        {
+                            "RequestVerificationToken": '@GetAntiXsrfRequestToken()'
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            $("#result").text("Success.").addClass("alert-success").removeClass("alert-danger");
+                            setTimeout(function(){ window.location.href="/Status/StatusList"; }, 500);
+                        },
+                        error: function (err) {
+                            console.error(err);
+                            $("#result").html("Error.").removeClass("alert-success").addClass("alert-danger");
+                        }
+                    });
+                    $("#submit").prop("disabled", false);
+                }
+            });
+            $('#save-status-draft').click(function () {
+                var content = tinyMCE.editors[0].getContent();
+                if (content == null || content == "") {
+                    alert('输入状态为空！');
+                }
+                else {
+                    $("#submit").prop("disabled", true);
+                    var formData = new FormData();
+                    formData.append('content', content);
+                    $.ajax({
+                        type: "POST",
+                        url: $("#form").context.URL + "&draft=1",
+                        data: formData,
+                        cache: false,
+                        processData: false,
+                        contentType: false,
+                        headers:
+                        {
+                            "RequestVerificationToken": '@GetAntiXsrfRequestToken()'
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            $("#result").text("Success.").addClass("alert-success").removeClass("alert-danger");
+                            setTimeout(function(){ window.location.href="/Status/StatusDraftList"; }, 500);
+                        },
+                        error: function (err) {
+                            console.error(err);
+                            $("#result").html("Error.").removeClass("alert-success").addClass("alert-danger");
+                        }
+                    });
+                    $("#submit").prop("disabled", false);
+                }
+            });
+    </script>
+
+    <!-- 点赞的POST请求 -->
+    <script>
+    function likeEvent(index, id) {
+
+            $("#like-" + (index + 1).toString()).prop("disabled", true);
+            $.ajax({
+                type: "POST",
+                url: "/home/User/like/" + id,
+                data: null,//formData,
+                cache: false,
+                processData: false,
+                contentType: false,
+
+                success: function (data) {
+                    console.log(data);
+                    $("#like-" + (index + 1).toString()).children("i").text("(" + data.msg + ")");
+
+                },
+                error: function (err) {
+                    console.error(err);
+
+                }
+            });
+            $("#like-" + (index + 1).toString()).prop("disabled", false);
+
+        }</script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,129 @@
+﻿@page
+@model XMUER.Pages.Status.StatusModel
+@{
+    ViewData["Title"] = Model.Share.Username + "发布的状态";
+}
+
+@*查看发布的状态页面*@
+<div class="card border-primary">
+    <h6 class="card-header">
+        @Model.Share.Username 发布的状态
+    </h6>
+    <ul class="list-group list-group-flush">
+        @*这是新鲜事的内容*@
+        <li class="list-group-item">
+            <div class="media fresh-thing">
+                <img src="@Model.Share.Avatar" class="mr-3" alt="咦，网络有问题" width="50" height="50">
+                <div class="media-body">
+                    <h6 class="mt-0 mb-1">@Model.Share.Username</h6>
+                    <p class="mt-0 mb-1 text-muted">发布于：@Model.Share.Time</p>
+                    <div class="fresh-thing-content">
+                        @Html.Raw(Model.Share.ShareContent)
+                    </div>
+                    @*这是新鲜事的按钮*@
+                    <div class="btn-group" role="group">
+                        <a href="/home/user/like/@Model.Share.ID" class="btn btn-light btnPraise"> 👍 点赞 (<b class="praiceNum">@Model.Share.like</b>) </a>
+                        <a class="btn btn-light btnComment" data-toggle="collapse" data-target="#commentCollapse-@Model.Share.ID" aria-expanded="false" aria-controls="commentCollapse"> 💬 评论 (<b>@Model.Share.commentCount</b>) </a>
+                    </div>
+                    @*这是评论的框*@
+                    <div class="collapse mb-3" id="commentCollapse-@Model.Share.ID">
+                        <hr />
+                        <div class="card card-body">
+                            <div class="row">
+                                <div class="col-10">
+                                    <input type="text" class="form-control" id="commentText-@Model.Share.ID" placeholder="输入你的评论" name="content" />
+                                </div>
+                                <div class="col-2">
+                                    <button type="button" class="btn btn-warning btnSubmitComment" value="@Model.Share.ID">发表评论</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        @*这是评论列表*@
+        <li class="list-group-item">
+            <h6>评论列表</h6>
+            <ul class="list-group list-group-flush">
+                @{ 
+                    foreach (var comment in Model.Comments)
+                    {
+                        <li class="list-group-item">
+                            <div class="media fresh-thing">
+                                <img src="@comment.Avatar" class="mr-3" alt="啊，网络有问题" width="50" height="50">
+                                <div class="media-body">
+                                    <h6 class="mt-0 mb-1">@comment.Username</h6>
+                                    <p class="mt-0 mb-1 text-muted">评论于：@comment.Time.ToString()</p>
+                                    <div class="fresh-thing-content">
+                                        @Html.Raw(comment.Content)
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </li>
+    </ul>
+</div>
+
+@*评论功能*@
+<script>$('.btnSubmitComment').click(function () {
+            var shareId = $(this).val();
+            var comment = $('#commentText-' + shareId).val();
+            var formData = new FormData();
+            formData.append("content", comment)
+            $.ajax({
+                url: "/home/user/comment/" + shareId,
+                type: 'post',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (true == data.success) {
+                        alert("评论成功");
+                    } else {
+                        alert("评论失败，因为：" + data.msg);
+                    }
+                },
+                error: function (data) {
+                    if (true == data.success) {
+                        alert("评论成功");
+                    } else {
+                        alert("评论失败，因为：" + data.msg);
+                    }
+                }
+            });
+        });</script>
+
+@*按赞功能*@
+<script>$('.btnPraise').click(function (event) {
+            event.preventDefault();
+            var button = $(this);
+            var src = button.attr('href');
+            $.ajax({
+                url: src,
+                type: 'post',
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (true == data.success) {
+                        let before = button.children('.praiceNum').text();
+                        console.log(before);
+                        button.children('.praiceNum').text(Number.parseInt(before) + 1);
+                    } else {
+                        alert("点赞失败，因为：" + data.msg);
+                    }
+                },
+                error: function (data) {
+                    if (true == data.success) {
+                        let before = button.children('.praiceNum').text();
+                        console.log(before);
+                        button.children('.praiceNum').text(Number.parseInt(before) + 1);
+                    } else {
+                        alert("点赞失败，因为：" + data.msg);
+                    }
+                }
+            });
+        });</script>

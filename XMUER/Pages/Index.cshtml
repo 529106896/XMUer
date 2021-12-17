@@ -1,0 +1,230 @@
+﻿@page
+@model XMUER.Pages.IndexModel
+@{
+    ViewData["Title"] = "主页";
+}
+
+<link rel="stylesheet" href="~/css/IndexPage.css" />
+
+<script>
+    $(document).ready(() => {
+        $('#mnuHome').addClass("active");
+    })
+</script>
+
+@*新鲜事及找同学*@
+<div class="row">
+    <div class="col-7">
+        <div class="card">
+            <h6 class="card-header">
+                新鲜事
+            </h6>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    @{
+                        foreach (var share in Model.Shares)
+                        {
+                            <li class="list-group-item">
+                                @*这是新鲜事的内容*@
+                                <div class="media fresh-thing">
+                                    <img src="@share.Avatar" class="mr-3" alt="啊，网络断了" width="50" height="50">
+                                    <div class="media-body">
+                                        <h6 class="mt-0 mb-1">@share.Username</h6>
+                                        <p class="mt-0 mb-1 text-muted">发布于：@share.Time</p>
+                                        <div class="fresh-thing-content">
+                                            @Html.Raw(share.ShareContent)
+                                        </div>
+                                        @*这是新鲜事的按钮*@
+                                        <div class="btn-group" role="group">
+                                            <a href="/home/user/like/@share.ID" class="btn btn-light btnPraise"> 👍 点赞 (<b class="praiceNum">@share.like</b>) </a>
+                                            <a class="btn btn-light btnComment" data-toggle="collapse" data-target="#commentCollapse-@share.ID" aria-expanded="false" aria-controls="commentCollapse"> 💬 快速评论 (<b>@share.commentCount</b>) </a>
+                                            <a href="/Status/Status?shareId=@share.ID" class="btn btn-light btnView"> 👀 查看 </a>
+                                        </div>
+                                        @*这是评论的框*@
+                                        <div class="collapse mb-3" id="commentCollapse-@share.ID">
+                                            <hr />
+                                            <div class="card card-body">
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <input type="text" class="form-control" id="commentText-@share.ID" placeholder="输入你的评论" name="content" />
+                                                    </div>
+                                                    <div class="col">
+                                                        <button type="button" class="btn btn-warning btnSubmitComment" value="@share.ID">发表评论</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    @*快捷发状态及找同学*@
+    <div class="col-5">
+        @*快捷发状态*@
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5>快捷发布你的状态</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col">
+                        <textarea class="form-control tinymce" id="status-content"
+                                  name="content"></textarea>
+                    </div>
+                </div>
+                <div style="text-align:right;">
+                    <button type="button" class="btn btn-success" id="post-status" name="post-status">发布</button>
+                </div>
+            </div>
+        </div>
+        @*找同学*@
+        <div class="card">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" id="tabSearch">
+                    <li class="nav-item">
+                        <a class="nav-link active" name="college">找学院同学</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" name="major">找专业同学</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" name="department">找系同学</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" name="name">搜名字</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-9">
+                        <input class="form-control" id="searchField" placeholder="关键字" />
+                    </div>
+                    <div class="col">
+                        <button id="searchAnyone" type="button" class="btn btn-primary mb-2">搜索</button>
+                    </div>
+                </div>
+            </div>
+            <script>
+            var active = "college"
+            @*查找同学选项卡*@
+            $('#tabSearch a').on('click', function (e) {
+                e.preventDefault();
+                $(this).tab('show')
+                // 获取选项
+                active = $(this).attr('name')
+            });
+            @*搜索按钮*@
+            $('#searchAnyone').click(function () {
+                // 搜索同学
+                var searchBy = $('#searchField').val();
+                window.location.href = "/home/user/" + active + "?value=" + searchBy;
+            });
+            </script>
+        </div>
+    </div>
+</div>
+
+@*评论功能*@
+<script>
+    $('.btnSubmitComment').click(function () {
+        var shareId = $(this).val();
+        var comment = $('#commentText-' + shareId).val();
+        var formData = new FormData();
+        formData.append("content", comment)
+        $.ajax({
+            url: "/home/user/comment/" + shareId,
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (true === data.success) {
+                    alert("评论成功");
+                    location.reload();
+                } else {
+                    alert("评论失败，因为：" + data.msg);
+                    location.reload();
+                }
+            },
+            error: function (data) {
+                if (true === data.success) {
+                    alert("评论成功");
+                    location.reload();
+                } else {
+                    alert("评论失败，因为：" + data.msg);
+                }
+            }
+        });
+    });</script>
+
+@*按赞功能*@
+<script>
+    $('.btnPraise').click(function (event) {
+        event.preventDefault();
+        var button = $(this);
+        var src = button.attr('href');
+        $.ajax({
+            url: src,
+            type: 'post',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (true === data.success) {
+                    let before = button.children('.praiceNum').text();
+                    console.log(before);
+                    button.children('.praiceNum').text(Number.parseInt(before) + 1);
+                    button.removeClass('btn-light');
+                    button.addClass('btn-warning');
+                    button.addClass('disabled');
+                } else {
+                    alert("点赞失败，因为：" + data.msg);
+                }
+            },
+            error: function (data) {
+                if (true == data.success) {
+                    let before = button.children('.praiceNum').text();
+                    //console.log(before);
+                    button.children('.praiceNum').text(Number.parseInt(before) + 1);
+                } else {
+                    alert("点赞失败，因为：" + data.msg);
+                }
+            }
+        });
+    });</script>
+
+@*快捷发布新鲜事功能*@
+<script>
+    $('#post-status').click(function () {
+        // 发送新鲜事
+        var status = tinyMCE.activeEditor.getContent();
+        var formData = new FormData();
+        formData.append("content", status)
+        $.ajax({
+            url: "/home/user/status?method=post",
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (true === data.success) {
+                    location.reload();
+                } else {
+                    alert("新鲜事发布失败，因为" + data.msg);
+                }
+            },
+            error: function (data) {
+                if (true === data.success) {
+                    location.reload();
+                } else {
+                    alert("新鲜事发布失败，因为" + data.msg);
+                }
+            }
+        });
+    });</script>

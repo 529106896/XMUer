@@ -1,0 +1,31 @@
+﻿@page
+@model XMUER.Pages.Private.UserPageModel
+@{
+}
+<div class="row">
+    <div class="col-4">
+        @*名片*@
+        <div class="card border-primary">
+            <img class="card-img-top img-thumbnail" src=@Model.imgUrl alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Name</h5>
+                <h5 class="card-subtitle mb-2 text-muted">就读于 @Model.StudySchool</h5>
+                <p class="card-text">@Model.Description</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        @*留言板*@
+        <div class="card">
+            <div class="card-header">
+                他的留言板
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    你最近未有留给他的留言。
+                </p>
+                <a href="#" class="btn btn-primary">编写新留言</a>
+            </div>
+        </div>
+    </div>
+</div>

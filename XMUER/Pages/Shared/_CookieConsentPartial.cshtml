@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Http.Features
+
+@{
+    var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
+    var showBanner = !consentFeature?.CanTrack ?? false;
+    var cookieString = consentFeature?.CreateConsentCookie();
+}
+
+@if (showBanner)
+{
+    <nav id="cookieConsent" class="navbar navbar-default navbar-fixed-top" role="alert">
+        <div class="container">
+            <div class="navbar-collapse">
+                <p class="navbar-text">
+                    我们将运用 Cookie 技术留存及使用你在此网站的资讯
+                </p>
+                <div class="navbar-right">
+                    <button type="button" class="btn btn-info navbar-btn" data-cookie-string="@cookieString">可</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <script>
+        (function () {
+            document.querySelector("#cookieConsent button[data-cookie-string]").addEventListener("click", function (el) {
+                document.cookie = el.target.dataset.cookieString;
+                document.querySelector("#cookieConsent").classList.add("hidden");
+                location.reload();
+            }, false);
+        })();
+    </script>
+}

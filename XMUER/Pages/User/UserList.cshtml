@@ -1,0 +1,90 @@
+﻿
+@model XMUER.Models.ModelsList.UserListModel
+@{
+    ViewData["Title"] = "搜索结果";
+}
+
+@*首页 JS*@
+<script>$(document).ready(() => {
+        // 添加左边菜单栏选中
+        $('#mnuFriends').addClass("active");
+    })</script>
+
+@*搜索用户界面*@
+@*找同学*@
+<div class="card mb-3">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs" id="tabSearch">
+            <li class="nav-item">
+                <a class="nav-link active" name="college">找学院同学</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" name="major">找专业同学</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" name="department">找系同学</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" name="name">搜名字</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-9">
+                <input class="form-control" id="searchField" placeholder="关键字" />
+            </div>
+            <div class="col">
+                <button id="searchAnyone" type="button" class="btn btn-primary mb-2">搜索</button>
+            </div>
+        </div>
+    </div>
+    <script>
+            var active = "college"
+            @*查找同学选项卡*@
+            $('#tabSearch a').on('click', function (e) {
+                e.preventDefault();
+                $(this).tab('show')
+                // 获取选项
+                active = $(this).attr('name')
+            });
+            @*搜索按钮*@
+            $('#searchAnyone').click(function () {
+                // 搜索同学
+                var searchBy = $('#searchField').val();
+                window.location.href = "/home/user/" + active + "?value=" + searchBy;
+            });
+    </script>
+</div>
+<div class="card">
+    <div class="card-header">
+        搜寻结果
+    </div>
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            @{ 
+                if (Model.users.Count <= 0)
+                {
+                    <li class="list-group-item">
+                        未找到结果
+                    </li>
+                }
+                foreach (var user in Model.users)
+                {
+                    <li class="list-group-item">
+                        @*这是一个用户*@
+                        <div class="media fresh-thing">
+                            <a href="/Private/UserPage?userId=@user.ID">
+                                <img src="../@user.Avatar" class="mr-3" alt="阿这 网络断了" width="50" height="50">
+                            </a>
+                            <div class="media-body">
+                                <h6 class="mt-0 mb-1">@user.realName</h6>
+                                <p class="mt-0 mb-1 text-muted">@user.Department</p>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>

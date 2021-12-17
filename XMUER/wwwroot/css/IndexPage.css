@@ -1,0 +1,9 @@
+﻿.fresh-thing {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+    .fresh-thing .fresh-thing-content {
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }

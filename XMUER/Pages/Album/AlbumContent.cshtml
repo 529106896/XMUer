@@ -1,0 +1,100 @@
+﻿@page
+@model XMUER.Pages.Album.AlbumContentModel
+@{
+    ViewData["Title"] = "我的相册";
+}
+
+@*相册 JS*@
+<script>$(document).ready(() => {
+    // 添加左边菜单栏选中
+    $('#mnuMyAlbum').addClass("active");
+})</script>
+
+@*相册内容 页面*@
+<h5><a href="@Url.Content("~/home/album")" class="btn btn-light">&lt; 返回 </a> @Model.AlbumName</h5>
+<hr />
+
+@*相册相片*@
+<div id="links" class="links">
+    @{
+        foreach (var photo in Model.Photos)
+        {
+            <a href="@Url.Content(photo.Picture)" class="pictureButton" data-toggle="model" data-target="#modelPicture" value="@photo.ID">
+                <img src="@Url.Content(photo.Picture)"
+                     class=""
+                     loading="lazy"
+                     alt="咦，服务器炸咯"
+                     width="120"
+                     height="120" />
+            </a>
+        }
+    }
+</div>
+
+<div id="modalPicture" class="modal fade" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a id="btnViewSrcPict" class="btn btn-primary">
+                    预览原图
+                </a>
+                <a id="delPhoto" class="btn btn-danger" style="margin-left: 2%">
+                    删除图片
+                </a>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="picInModal" src="#"
+                     loading="lazy"
+                     alt="咦，服务器炸咯"
+                     class="img-fluid"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.pictureButton').click(function (event) {
+        event.preventDefault();
+        var src = $(this).attr('href');
+        var pId = $(this).attr('value');
+        //console.log(pId);
+        $('#picInModal').attr('src', src);
+        $('#btnViewSrcPict').attr('href', src);
+        document.getElementById('delPhoto').value = pId;
+        $('#modalPicture').modal();
+    });
+</script>
+
+<script>
+    $('#delPhoto').click(function() {
+        var r = confirm('确定删除此照片？');
+        if (r === true) {
+            var pId = $(this).val();
+            $.ajax({
+                url: "/home/album/delphoto/" + pId,
+                type: 'delete',
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if (data.success === true) {
+                        alert("删除成功");
+                        window.location.href = "AlbumContent?albumId=" + @Model.AlbumId;
+                    } else {
+                        alert("删除失败，因为" + data.msg);
+                    }
+                },
+                error: function(data) {
+                    if (data.success === true) {
+                        alert("删除成功");
+                        window.location.href = "AlbumContent?albumId=" + @Model.AlbumId;
+                    } else {
+                        alert("删除失败，因为" + data.msg);
+                    }
+                }
+            });
+        }
+    });
+</script>

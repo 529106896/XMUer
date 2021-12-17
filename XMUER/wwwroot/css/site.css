@@ -1,0 +1,399 @@
+/* XMUers Site CSS */
+body {
+    padding-top: 50px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-top: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".jpg"] {
+    max-width: 100%;
+    height: 200px;
+    display: block;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+/* 导航栏样式 */
+.navbar {
+    background-color: #274f7a;
+}
+
+    .navbar .navbar-brand {
+        color: #ffffff;
+    }
+
+        .navbar .navbar-brand:hover,
+        .navbar .navbar-brand:focus {
+            color: #ffffff;
+        }
+
+    .navbar .navbar-text {
+        color: #ffffff;
+    }
+
+        .navbar .navbar-text a {
+            color: #ffffff;
+        }
+
+            .navbar .navbar-text a:hover,
+            .navbar .navbar-text a:focus {
+                color: #ffffff;
+            }
+
+    .navbar .navbar-nav .nav-link {
+        color: #ffffff;
+        border-radius: .25rem;
+        margin: 0 0.25em;
+    }
+
+        .navbar .navbar-nav .nav-link:not(.disabled):hover,
+        .navbar .navbar-nav .nav-link:not(.disabled):focus {
+            color: #ffffff;
+        }
+
+    .navbar .navbar-nav .dropdown-menu {
+        background-color: #274f7a;
+        border-color: #134857;
+    }
+
+        .navbar .navbar-nav .dropdown-menu .dropdown-item {
+            color: #ffffff;
+        }
+
+            .navbar .navbar-nav .dropdown-menu .dropdown-item:hover,
+            .navbar .navbar-nav .dropdown-menu .dropdown-item:focus,
+            .navbar .navbar-nav .dropdown-menu .dropdown-item.active {
+                color: #ffffff;
+                background-color: #134857;
+            }
+
+        .navbar .navbar-nav .dropdown-menu .dropdown-divider {
+            border-top-color: #134857;
+        }
+
+    .navbar .navbar-nav .nav-item.active .nav-link,
+    .navbar .navbar-nav .nav-item.active .nav-link:hover,
+    .navbar .navbar-nav .nav-item.active .nav-link:focus,
+    .navbar .navbar-nav .nav-item.show .nav-link,
+    .navbar .navbar-nav .nav-item.show .nav-link:hover,
+    .navbar .navbar-nav .nav-item.show .nav-link:focus {
+        color: #ffffff;
+        background-color: #3a75b4;
+    }
+
+    .navbar .navbar-toggler {
+        border-color: #ffffff;
+    }
+
+        .navbar .navbar-toggler:hover,
+        .navbar .navbar-toggler:focus {
+            background-color: #134857;
+        }
+
+        .navbar .navbar-toggler .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+    .navbar .navbar-collapse,
+    .navbar .navbar-form {
+        border-color: #ffffff;
+    }
+
+    .navbar .navbar-link {
+        color: #ffffff;
+    }
+
+        .navbar .navbar-link:hover {
+            color: #ffffff;
+        }
+
+@media (max-width: 575px) {
+    .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item {
+        color: #ffffff;
+    }
+
+        .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+        .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+            color: #ffffff;
+        }
+
+        .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item.active {
+            color: #ffffff;
+            background-color: #134857;
+        }
+}
+
+@media (max-width: 767px) {
+    .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item {
+        color: #ffffff;
+    }
+
+        .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+        .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+            color: #ffffff;
+        }
+
+        .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item.active {
+            color: #ffffff;
+            background-color: #134857;
+        }
+}
+
+@media (max-width: 991px) {
+    .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item {
+        color: #ffffff;
+    }
+
+        .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+        .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+            color: #ffffff;
+        }
+
+        .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item.active {
+            color: #ffffff;
+            background-color: #134857;
+        }
+}
+
+@media (max-width: 1199px) {
+    .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item {
+        color: #ffffff;
+    }
+
+        .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+        .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+            color: #ffffff;
+        }
+
+        .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item.active {
+            color: #ffffff;
+            background-color: #134857;
+        }
+}
+
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #ffffff;
+}
+
+    .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+    .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+        color: #ffffff;
+    }
+
+    .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item.active {
+        color: #ffffff;
+        background-color: #134857;
+    }
+
+/* 导航栏样式结束*/
+
+/* 左侧导航栏样式 */
+#wrapper {
+    overflow-x: hidden;
+}
+
+#sidebar-wrapper {
+    min-height: 100vh;
+    margin-left: -15rem;
+    -webkit-transition: margin .25s ease-out;
+    -moz-transition: margin .25s ease-out;
+    -o-transition: margin .25s ease-out;
+    transition: margin .25s ease-out;
+    background-color: #274f7a; /*左侧导航栏头部颜色*/
+}
+
+    #sidebar-wrapper .sidebar-heading {
+        padding: 0.875rem 1.25rem;
+        font-size: 1.2rem;
+    }
+
+    #sidebar-wrapper .list-group {
+        width: 15rem;
+    }
+
+#page-content-wrapper {
+    min-width: 100vw;
+    padding: 10px 10px 10px 10px;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+}
+
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+        margin-left: 0;
+    }
+
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: -15rem;
+    }
+}
+
+.animate-menu-push {
+    left: 0;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+    .animate-menu-push.animate-menu-push-right {
+        left: 200px;
+    }
+
+    .animate-menu-push.animate-menu-push-left {
+        left: -200px;
+    }
+
+.animate-menu {
+    position: fixed;
+    top: 0;
+    width: 200px;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.animate-menu-left {
+    left: -200px;
+}
+
+    .animate-menu-left.animate-menu-open {
+        left: 0;
+    }
+
+.animate-menu-right {
+    right: -200px;
+}
+
+    .animate-menu-right.animate-menu-open {
+        right: 0;
+    }
+
+.sidebar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: #3a75b4;
+}
+
+    .sidebar-menu > li {
+        position: relative;
+        margin: 0;
+        padding: 0;
+    }
+
+        .sidebar-menu > li > a {
+            padding: 12px 5px 12px 15px;
+            display: block;
+            border-left: 3px solid transparent;
+            color: #ffffff;
+        }
+
+            .sidebar-menu > li > a > .fa {
+                width: 20px;
+            }
+
+        .sidebar-menu > li:hover > a, .sidebar-menu > li.active > a {
+            color: #fff;
+            background: #274f7a; /*选中的背景色*/
+            border-left-color: #2d5c8d; /*选中块块的左边颜色*/
+        }
+
+        .sidebar-menu > li .label,
+        .sidebar-menu > li .badge {
+            margin-top: 3px;
+            margin-right: 5px;
+        }
+
+    .sidebar-menu li.sidebar-header {
+        padding: 10px 25px 10px 15px;
+        font-size: 12px;
+        color: #ffffff;
+        background: #2d5c8d; /*左侧导航栏头部颜色*/
+    }
+
+    .sidebar-menu li > a > .fa-angle-left {
+        width: auto;
+        height: auto;
+        padding: 0;
+        margin-right: 10px;
+        margin-top: 3px;
+    }
+
+    .sidebar-menu li.active > a > .fa-angle-left {
+        transform: rotate(-90deg);
+    }
+
+    .sidebar-menu li.active > .sidebar-submenu {
+        display: block;
+    }
+
+    .sidebar-menu a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    /* 关于子菜单的定义 */
+    .sidebar-menu .sidebar-submenu {
+        display: none;
+        list-style: none;
+        margin: 0 1px;
+        background: #2c3b41;
+    }
+
+        .sidebar-menu .sidebar-submenu > ul > li {
+            list-style: none;
+        }
+
+        .sidebar-menu .sidebar-submenu > ul > li > a {
+            padding: 10px 25px 10px 5px;
+            display: block;
+            font-size: 16px;
+            color: #a8a8a8;
+        }
+
+            .sidebar-menu .sidebar-submenu > ul > li > a > .fa {
+                width: 20px;
+            }
+
+            .sidebar-menu .sidebar-submenu > ul > li > a > .fa-angle-left,
+            .sidebar-menu .sidebar-submenu > ul > li > a > .fa-angle-down {
+                width: auto;
+            }
+
+        .sidebar-menu .sidebar-submenu > ul > li.active > a,
+        .sidebar-menu .sidebar-submenu > ul > li > a:hover {
+            color: #fff;
+        }
+
+/* 左侧导航栏样式结束 */
+
+/* Bootstrap 卡片集合样式定义 */

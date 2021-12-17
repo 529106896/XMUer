@@ -1,0 +1,395 @@
+﻿@page
+@model XMUER.Pages.Private.UserInfoModel
+@{
+    var gender = "null";
+    switch (Model.user.gender)
+    {
+        case 1:
+            gender = "男";
+            break;
+        case 2:
+            gender = "女";
+            break;
+        default:
+            gender = "未设置";
+            break;
+    };
+    ViewData["Title"] = "我的个人资料";
+}
+
+<script>
+    $(document).ready(() => {
+        // 在左侧导航栏选中个人信息页面标签
+        $('#mnuPersonalCentre').addClass("active");
+        $('#mnuPersonalInfo').addClass("active");
+    })
+</script>
+
+<div class="row">
+    <div class="col-sm">
+        @*学校信息*@
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-building"></i>
+                学校信息
+                @*点击展开学校编辑菜单*@
+                <button type="button" class="btn btn-primary" style="margin-left:65%" data-toggle="modal" data-target="#exampleModalCenter1">编辑</button>
+            </div>
+            <div class="card-body">
+                <!--展示个人学校信息-->
+                <table class="table table-borderless table-hover">
+                    <tr>
+                        <th scope="row">大学</th>
+                        <td>@Model.user.university</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">高中</th>
+                        <td>@Model.user.highSchool</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">初中</th>
+                        <td>@Model.user.juniorHighSchool</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">小学</th>
+                        <td>@Model.user.primarySchool</td>
+                    </tr>
+                </table>
+                <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">修改学校信息</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <!--修改个人学校信息-->
+                            <div class="modal-body">
+                                <form method="post">
+                                    <div class="form-group row">
+                                        <label for="university" class="col-sm-3 col-form-label">大学</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="university" placeholder="大学" asp-for="university">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="highSchool" class="col-sm-3 col-form-label">高中</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="highSchool" placeholder="高中" asp-for="highSchool">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="juniorHighSchool" class="col-sm-3 col-form-label">初中</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="juniorHighSchool" placeholder="初中" asp-for="juniorHighSchool">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="primarySchool" class="col-sm-3 col-form-label">小学</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="primarySchool" placeholder="小学" asp-for="primarySchool">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-10" style="margin-left: 65%">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                            <button type="submit" class="btn btn-primary">修改</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*个人兴趣*@
+        <div class="card" style="margin-top:30px">
+            <div class="card-header">
+                <i class="fa fa-heart"></i>
+                个人兴趣
+                @*点击展开个人兴趣编辑菜单*@
+                <button type="button" class="btn btn-primary" style="margin-left:65%" data-toggle="modal" data-target="#exampleModalCenter2">编辑</button>
+            </div>
+            <div class="card-body">
+                <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">修改个人兴趣</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <!--修改个人兴趣信息-->
+                            <div class="modal-body">
+                                <form method="post">
+                                    <div class="form-group row">
+                                        <label for="hobbyMusic" class="col-sm-3 col-form-label">音乐</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="hobbyMusic" placeholder="音乐" asp-for="hobbyMusic">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="hobbyBook" class="col-sm-3 col-form-label">书本</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="hobbyBook" placeholder="书本" asp-for="hobbyBook">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="hobbyMovie" class="col-sm-3 col-form-label">电影</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="hobbyMovie" placeholder="电影" asp-for="hobbyMovie">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="hobbyGame" class="col-sm-3 col-form-label">游戏</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="hobbyGame" placeholder="游戏" asp-for="hobbyGame">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="hobbyAnime" class="col-sm-3 col-form-label">动漫</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="hobbyAnime" placeholder="动漫" asp-for="hobbyAnime">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="hobbySport" class="col-sm-3 col-form-label">运动</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="hobbySport" placeholder="运动" asp-for="hobbySport">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="hobbyOther" class="col-sm-3 col-form-label">爱好</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="hobbyOther" placeholder="爱好" asp-for="hobbyOther">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-10" style="margin-left:65%">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                            <button type="submit" class="btn btn-primary">修改</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--展示个人爱好信息-->
+                <table class="table table-borderless table-hover">
+                    <tr>
+                        <th scope="row">音乐</th>
+                        <td>@Model.user.hobbyMusic</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">书本</th>
+                        <td>@Model.user.hobbyBook</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">电影</th>
+                        <td>@Model.user.hobbyMovie</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">游戏</th>
+                        <td>@Model.user.hobbyGame</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">动漫</th>
+                        <td>@Model.user.hobbyAnime</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">运动</th>
+                        <td>@Model.user.hobbySport</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">其他爱好</th>
+                        <td>@Model.user.hobbyOther</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        @*基本信息*@
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-info"></i>
+                基本信息
+                @*点击展开个人信息编辑菜单*@
+                <button type="button" class="btn btn-primary" style="margin-left:65%" data-toggle="modal" data-target="#exampleModalCenter3">编辑</button>
+            </div>
+            <div class="card-body">
+                <div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">修改基本信息</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <!--修改个人基本信息-->
+                            <div class="modal-body">
+                                <form method="post">
+                                    <div class="form-group row">
+                                        <label for="realName" class="col-sm-3 col-form-label">真实姓名</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="realName" placeholder="真实姓名" asp-for="realName">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="gender" class="col-sm-3 col-form-label">性别</label>
+                                        <div class="col-sm-9">
+                                            <select class="custom-select my-1 mr-sm-2" id="gender" asp-for="gender">
+                                                <option selected>选择...</option>
+                                                <option value="1">男</option>
+                                                <option value="2">女</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="birthday" class="col-sm-3 col-form-label">生日</label>
+                                        <div class="col-sm-9">
+                                            <input type="date" class="form-control" id="birthday" placeholder="生日" asp-for="birthday">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="hometown" class="col-sm-3 col-form-label">家乡</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="hometown" placeholder="家乡" asp-for="hometown">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="email" class="col-sm-3 col-form-label">邮箱</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="email" placeholder="邮箱" asp-for="email">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="mobile" class="col-sm-3 col-form-label">手机号</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="mobile" placeholder="手机号" asp-for="mobile">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-10" style="margin-left:65%">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                            <button type="submit" class="btn btn-primary">修改</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--展示个人基本信息-->
+                <table class="table table-borderless table-hover">
+                    <tr>
+                        <th scope="row">真实姓名</th>
+                        <td>@Model.user.realName</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">性别</th>
+                        <td>@gender</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">生日</th>
+                        <!--以“2001年1月1日”的格式显示-->
+                        <td>@Model.user.birthday.ToLongDateString()</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">家乡</th>
+                        <td>@Model.user.hometown</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">邮箱</th>
+                        <td>@Model.user.email</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">手机号</th>
+                        <td>@Model.user.mobile</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="card" style="margin-top:30px">
+            <div class="card-header">
+                <i class="fa fa-book"></i>
+                学院专业信息
+                @*点击展开学院专业信息编辑菜单*@
+                <button type="button" class="btn btn-primary" style="margin-left:60%" data-toggle="modal" data-target="#exampleModalCenter4">编辑</button>
+            </div>
+            <div class="card-body">
+                <div class="modal fade" id="exampleModalCenter4" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">修改学院专业</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <!--修改个人兴趣信息-->
+                            <div class="modal-body">
+                                <form method="post">
+                                    <div class="form-group row">
+                                        <label for="hobbyMusic" class="col-sm-3 col-form-label">学号</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="studentNo" placeholder="学号" asp-for="studentNo">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="hobbyBook" class="col-sm-3 col-form-label">学院</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="college" placeholder="学院" asp-for="college">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="hobbyMovie" class="col-sm-3 col-form-label">院系</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="department" placeholder="院系" asp-for="department">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="hobbyGame" class="col-sm-3 col-form-label">专业</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="major" placeholder="专业" asp-for="major">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-10" style="margin-left:65%">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                            <button type="submit" class="btn btn-primary">修改</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--展示个人学院专业信息-->
+                <table class="table table-borderless table-hover">
+                    <tr>
+                        <th scope="row">学号</th>
+                        <td>@Model.user.StudentNo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">学院</th>
+                        <td>@Model.user.College</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">院系</th>
+                        <td>@Model.user.Department</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">专业</th>
+                        <td>@Model.user.Major</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

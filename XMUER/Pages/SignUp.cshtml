@@ -1,0 +1,62 @@
+﻿@page
+@model XMUER.Pages.SignUpModel
+@{
+    Layout = "~/Pages/Shared/_LayoutNotLogin.cshtml";
+    ViewData["Title"] = "注册用户";
+}
+
+<link rel="stylesheet" href="~/css/LoginPage.css"/>
+
+<div class="my-login-page">
+    <section class="h-100">
+        <div class="row justify-content-md-center h-100">
+            <div class="card-wrapper">
+                <div class="brand">
+                    <img src="/images/xmulogo.jpg" alt="xmuLogo"/>
+                </div>
+                <div class="card fat">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">
+                            注册你的XMUer账号！
+                        </h4>
+                        <form method="post" class="my-login-validation">
+                            <div class="form-group row">
+                                <input type="text" class="form-control" id="userName" placeholder="输入用户名" asp-for="userName" required/>
+                                @* 用户名无效时显示 *@
+                                <div class="invalid-feedback">
+                                    用户名无效
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <input type="password" class="form-control" id="userPass" placeholder="输入密码" asp-for="userPass" required>
+                                @* 密码无效时显示 *@
+                                <div class="invalid-feedback">
+                                    请输入密码
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <input type="password" class="form-control" id="userPassAgain" placeholder="请再次输入密码" asp-for="userPassAgain" required>
+                                @* 密码无效时显示 *@
+                                <div class="invalid-feedback">
+                                    请重复输入密码
+                                </div>
+                            </div>
+                            <div class="form-group m-0">
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    点此注册
+                                </button>
+                            </div>
+                            <div class="mt-4 text-center">
+                                已有账号？→<a href="/SignIn">点此登录</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <hr />
+                <div class="footer">
+                    <p>&copy; 2021 - DotNet Project</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

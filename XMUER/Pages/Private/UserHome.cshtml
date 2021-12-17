@@ -1,0 +1,162 @@
+﻿@page
+@model XMUER.Pages.Private.UserHomeModel
+@{
+    ViewData["Title"] = "个人主页";
+}
+
+<script>
+    $(document).ready(() => {
+        // 添加左边菜单栏选中
+        $('#mnuPersonalCentre').addClass("active");
+        $('#mnuPersonalHome').addClass("active");
+    })
+</script>
+<script>
+    function change() {
+        var select = document.getElementById("avatar");
+        var index = select.selectedIndex;
+        var showImage = document.getElementById("show");
+        if (index === 0)
+            showImage.src = "../images/defaultAvatar.png";
+        else
+            showImage.src = select.options[index].value;
+    }
+</script>
+
+<div class="row">
+    <div class="col-4">
+        @*名片*@
+        <div class="card border-primary">
+            <img id="userAvatar" class="card-img-top img-thumbnail" src=@Model.imgUrl alt="Card image cap">
+            <div class="card-body">
+                <div class="modal fade" id="exampleModalCenter4" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">修改头像简介</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <!--修改个人兴趣信息-->
+                            <div class="modal-body">
+                                <form method="post" enctype="multipart/form-data">
+                                    <div class="form-group row">
+                                        <label for="userAvatar" class="col-sm-3 col-form-label">头像</label>
+                                        <div class="col-sm-9">
+                                            <select class="custom-select my-1 mr-sm-2" id="avatar" asp-for="Avatar" onchange="change()">
+                                                <option selected>选择头像...</option>
+                                                <option value="../images/avatar1.png">头像1</option>
+                                                <option value="../images/avatar2.png">头像2</option>
+                                                <option value="../images/avatar3.png">头像3</option>
+                                                <option value="../images/avatar4.jpg">头像4</option>
+                                                <option value="../images/avatar5.jpg">头像5</option>
+                                                <option value="../images/avatar6.png">头像6</option>
+                                                <option value="../images/avatar7.png">头像7</option>
+                                                <option value="../images/defaultAvatar.png">默认头像</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="userDescription" class="col-sm-3 col-form-label">简介</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="description" placeholder="简介" asp-for="Description">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="userDescription" class="col-sm-3 col-form-label">头像预览</label>
+                                        <div class="col-sm-9">
+                                            <img id="show" class="card-img-top img-thumbnail" src=@Model.imgUrl alt="Card image cap">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-10" style="margin-left:65%">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                            <button type="submit" class="btn btn-primary">修改</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h5 class="card-title">@Model.WelcomeMessage</h5>
+                <h6 class="card-subtitle mb-2 text-muted">@Model.Email</h6>
+                <h5 class="card-subtitle mb-2 text-muted">就读于 @Model.StudySchool</h5>
+                <p id="userDescription" class="card-text">@Model.Description</p>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter4">修改</button>
+            </div>
+        </div>
+        @*最近来访*@
+        <div class="card mt-4">
+            <div class="card-header">
+                最近访客 <strong>3</strong>
+            </div>
+            <div class="card-body">
+                <img src="~/images/defaultAvatar.png" alt="..." class="img-thumbnail" style="max-width: 15%; margin-left:5px">
+                <img src="~/images/defaultAvatar.png" alt="..." class="img-thumbnail" style="max-width: 15%; margin-left:5px">
+                <img src="~/images/defaultAvatar.png" alt="..." class="img-thumbnail" style="max-width: 15%; margin-left:5px">
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        @*功能列表*@
+        <div class="card">
+            <div class="card-header">
+                查看
+            </div>
+            <div class="card-body text-center">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm">
+                            <svg class="bi bi-chat-square-dots text-success" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.5a2 2 0 0 1 1.6.8L8 14.333 9.9 11.8a2 2 0 0 1 1.6-.8H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                            </svg>
+                            <p class="card-text"><a href='../Status/StatusList@(HttpContext.Request.Query.ContainsKey("id")?"?id=" + HttpContext.Request.Query["id"]:"")' class="btn">状态</a></p>
+                        </div>
+                        <div class="col-sm">
+                            <svg class="bi bi-image text-warning" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M14.002 2h-12a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1zm-12-1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12z" />
+                                <path d="M10.648 7.646a.5.5 0 0 1 .577-.093L15.002 9.5V14h-14v-2l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71z" />
+                                <path fill-rule="evenodd" d="M4.502 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+                            </svg>
+                            <p class="card-text"><a href="/home/album" class="btn">那些照片</a></p>
+                        </div>
+                        <div class="col-sm">
+                            <svg class="bi bi-book text-info" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3.214 1.072C4.813.752 6.916.71 8.354 2.146A.5.5 0 0 1 8.5 2.5v11a.5.5 0 0 1-.854.354c-.843-.844-2.115-1.059-3.47-.92-1.344.14-2.66.617-3.452 1.013A.5.5 0 0 1 0 13.5v-11a.5.5 0 0 1 .276-.447L.5 2.5l-.224-.447.002-.001.004-.002.013-.006a5.017 5.017 0 0 1 .22-.103 12.958 12.958 0 0 1 2.7-.869zM1 2.82v9.908c.846-.343 1.944-.672 3.074-.788 1.143-.118 2.387-.023 3.426.56V2.718c-1.063-.929-2.631-.956-4.09-.664A11.958 11.958 0 0 0 1 2.82z" />
+                                <path fill-rule="evenodd" d="M12.786 1.072C11.188.752 9.084.71 7.646 2.146A.5.5 0 0 0 7.5 2.5v11a.5.5 0 0 0 .854.354c.843-.844 2.115-1.059 3.47-.92 1.344.14 2.66.617 3.452 1.013A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.276-.447L15.5 2.5l.224-.447-.002-.001-.004-.002-.013-.006-.047-.023a12.582 12.582 0 0 0-.799-.34 12.96 12.96 0 0 0-2.073-.609zM15 2.82v9.908c-.846-.343-1.944-.672-3.074-.788-1.143-.118-2.387-.023-3.426.56V2.718c1.063-.929 2.631-.956 4.09-.664A11.956 11.956 0 0 1 15 2.82z" />
+                            </svg>
+                            <p class="card-text"><a href="#" class="btn">我的故事</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*留言板*@
+        <div class="card mt-4">
+            <div class="card-header">
+                我的留言板
+            </div>
+            <div class="card-body">
+                @{ if (@Model.Comments.Count > 0)
+                   {
+                       foreach (var item in @Model.Comments)
+                       {
+                        <div class="alert alert-primary" role="alert">
+                            @item
+                        </div>
+                       }
+                   }
+                   else
+                   {
+                    <p class="card-text">
+                        你最近没有留言
+                    </p>
+                   } }
+                <a href="#" class="btn btn-primary">查看历史留言记录</a>
+            </div>
+        </div>
+    </div>
+</div>

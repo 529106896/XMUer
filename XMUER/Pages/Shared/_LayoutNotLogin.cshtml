@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>XMUer > @ViewData["Title"]</title>
+        <!-- environment + include节点：若网站在开发环境运行，则使用里面的文件 -->
+        <environment include="Development">
+            <!-- 
+            ~/表示Web应用程序根目录
+            ./表示当前目录
+            -->
+            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
+            <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+            <link rel="stylesheet" href="~/css/site.css"/>
+        </environment>
+        <!-- environment + exclude节点：若网站不在开发环境运行，则使用里面的文件 -->
+        <environment exclude="Development">
+            <!-- asp-fallback-href是当前url失效后要退回的css样式url -->
+            <!-- asp-fallback-test-class用于定义回退测试的类的名称 -->
+            <!-- asp-fallback-test-property用于回退测试的css属性名称 -->
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+            <!-- asp-append-version用于给当前文件追加版本和查询字符串 -->
+            <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        </environment>
+    </head>
+
+    <body>
+        <!-- 导航栏 -->
+    @*<nav class="navbar navbar-expand-lg navbar-light bg-primary fixed-top">
+            <a asp-page="/Index" class="navbar-brand mb-0 h1">XMUer</a>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0 han-navbar-list">
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/Index">主页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/About">关于</a>
+                </li>
+            </ul>
+        </nav>*@
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+            <span class="navbar-brand"><strong>XMUer</strong></span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapse" aria-controls="collapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+                
+            <div class="navbar-collapse collapse" id="collapse">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0 han-navbar-list">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Index">主页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/About">关于</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- 主页面 -->
+        <div class="d-flex" id="wrapper">
+            <div id="page-content-wrapper">
+                <div class="container body-content">
+                    @RenderBody()
+                </div>
+                @*<hr />
+                <footer>
+                    <p>&copy; 2021 - DotNet Project</p>
+                </footer>*@
+            </div>
+        </div>
+
+        <environment include="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        </environment>
+        <environment exclude="Development">
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.11.1.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"></script>
+            <script src="~/js/site.min.js" asp-append-version="true"></script>
+        </environment>
+    @RenderSection("Scripts", required: false)
+    </body>
+</html>

@@ -1,0 +1,102 @@
+﻿@page
+@model XMUER.Pages.Status.StatusListModel
+@{
+}
+
+@*状态分享 JS*@
+<script>
+    $(document).ready(() => {
+        // 添加左边菜单栏选中
+        $('#mnuMyState').addClass("active");
+    })</script>
+<div class="container">
+    <div class="card border-primary mb-3">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href='./StatusList@(HttpContext.Request.Query.ContainsKey("id")?"?id=" + HttpContext.Request.Query["id"]:"")'>我的状态</a>
+                </li>
+                @{
+                    if (!HttpContext.Request.Query.ContainsKey("id"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="./StatusDraftList">草稿箱</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./StatusEdit?new=1">新建</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href='../HomePage/UserHome?id=@(HttpContext.Request.Query["id"])'>Ta的主页</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="container">
+                @{
+                    foreach (var status in Model.statuses)
+                    {
+                        <div class="card" style="margin-top:15px">
+                            <div class="card-header">
+                                #@(Model.statuses.IndexOf(status) + 1)
+                            </div>
+                            <div class="card-body">
+                                <div class="modal fade" id="exampleModalCenter-@(Model.statuses.IndexOf(status) + 1)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle-@(Model.statuses.IndexOf(status) + 1)" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalCenterTitle-@(Model.statuses.IndexOf(status) + 1)">编辑状态</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group row">
+                                                    <label for="university" class="col-sm-2 col-form-label">内容</label>
+                                                    <div class="col-sm-10">
+                                                        <textarea class="form-control tinymce"
+                                                                  name="content-@(Model.statuses.IndexOf(status) + 1)" id="content-@(Model.statuses.IndexOf(status) + 1)"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-10" style="margin-left: 65%">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                                        <button id="submit-@(Model.statuses.IndexOf(status) + 1)" name="submit-@(Model.statuses.IndexOf(status) + 1)" class="btn btn-primary" onclick='tinyMCESave(@Model.statuses.IndexOf(status), @status.ID)'>修改</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="html-content-@(Model.statuses.IndexOf(status) + 1)">
+                                    @Html.Raw(System.Net.WebUtility.UrlDecode(@status.Content))
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <button class="btn btn-white" id="like-@(Model.statuses.IndexOf(status) + 1)" onclick="likeEvent(@Model.statuses.IndexOf(status), @status.ID)">
+                                            <i class="fa fa-thumbs-up" aria-hidden="true" style="vertical-align: middle;"><span>(@status.Like)</span></i>
+                                        </button>
+                                        <button class="btn btn-white" onclick="window.location.href='/Status/Status?shareId=@(Model.statuses[Model.statuses.IndexOf(status)].ID)'">
+                                            <i class="fa fa-comments" aria-hidden="true" style="vertical-align: middle;"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-9" style="text-align: right;">
+                                        <button type="button" class="btn btn-info" style="margin-left: 65%" data-toggle="modal" data-target="#exampleModalCenter-@(Model.statuses.IndexOf(status) + 1)" onclick="tinyMCEFill(@Model.statuses.IndexOf(status))">编辑</button>
+                                        <a class="btn btn-danger" href="/Status/StatusEdit?id=@status.ID&delete=1">删除</a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

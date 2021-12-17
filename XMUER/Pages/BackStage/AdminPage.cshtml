@@ -1,0 +1,35 @@
+﻿@page
+@model XMUER.Pages.BackStage.AdminPageModel
+@{
+}
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">用户注册名</th>
+        @*<th scope="col">用户密码</th>*@
+        <th scope="col">用户密码等级</th>
+        <th scope="col">是否通过审核</th>
+    </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var user in Model.users)
+            {
+                <tr>
+                    <!-- 第一列是序号，用户列表下标 + 1 -->
+                    <th scope="row">@(Model.users.IndexOf(user) + 1)</th>
+                    <td>@user.userName</td>
+                    @*<td>@user.password</td>*@
+                    <td>@Model.PasswordGrade(user.password)</td>
+
+                    <td>
+                        <a type="button" class="btn btn-success" href="?id=@(Model.users.IndexOf(user))&accept=1">通过注册</a>
+                        <a type="button" class="btn btn-danger" href="?id=@(Model.users.IndexOf(user))&accept=0">拒绝注册</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
