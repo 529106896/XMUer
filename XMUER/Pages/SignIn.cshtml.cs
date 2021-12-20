@@ -59,15 +59,15 @@ namespace XMUER.Pages
                     select u;
                 if (users.ToList().Count == 0)
                 {
-                    return Content("ÓÃ»§Ãû»òÃÜÂë´íÎó£¡");
+                    return Content("<script >alert('ÓÃ»§Ãû»òÃÜÂë´íÎó£¡');parent.location.href='/SignIn'</script >", "text/html; charset=utf-8");
                 }
                 Models.Home.User loginUser = users.First();
                 if (null != loginUser && loginUser.Md5Password.Equals(md5Pass))
                 {
                     if (loginUser.state == 0)
-                        return Content("ÕËºÅÉĞÎ´ÉóºË£¡");
+                        return Content("<script >alert('ÕËºÅÉĞÎ´ÉóºË£¡');parent.location.href='/SignIn'</script >", "text/html; charset=utf-8");
                     if (loginUser.state == -1)
-                        return Content("ÄãµÄ×¢²á±»¾Ü¾ø£¡ÇëÖØĞÂ×¢²á£¡");
+                        return Content("<script >alert('ÄãµÄ×¢²á±»¾Ü¾ø£¡ÇëÖØĞÂ×¢²á');parent.location.href='/SignIn'</script >", "text/html; charset=utf-8");
                     HttpContext.Session.Clear();
                     HttpContext.Session.Set("userId", System.Text.Encoding.Default.GetBytes(loginUser.ID.ToString()));
                     HttpContext.Session.Set("userName", System.Text.Encoding.Default.GetBytes(loginUser.userName));

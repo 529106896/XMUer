@@ -24,7 +24,7 @@ namespace XMUER.Pages.Private
         public string imgUrl { get; set; }
         public string Description { get; set; }
         public List<string> Comments { get; set; }
-        public string Avatar { get; set; }
+        public List<Avatar> Avatar { get; set; }
 
         public UserHomeModel(MyContext db)
         {
@@ -40,14 +40,15 @@ namespace XMUER.Pages.Private
                 return Redirect("/SignIn");
             }
             userId = Convert.ToInt32(tmp);
+            getAvatarContent(userId);
             user = _db.Users.Find(userId);
             WelcomeMessage = user.userName;
             StudySchool = user.university != null ? user.university : "匿名学校";
             Email = user.email;
-            imgUrl = user.Avatar == null? "../images/defaultAvatar.png" : user.Avatar;
             Department = user.Department;
             Description = user.homePageDescription == null? "用户太懒了，还没有写个人简介" : user.homePageDescription;
             Comments = new List<string>(); // TODO
+            imgUrl = user.Avatar == null ? "../avatar/defaultAvatar.png" : user.Avatar;
             return Page();
         }
 
@@ -66,11 +67,6 @@ namespace XMUER.Pages.Private
                         ? null
                         : tmp.Value.ToString();
                 }
-
-                if (tmp.Key == "Avatar")
-                {
-                    user.Avatar = tmp.Value.ToString()=="选择头像..." ? user.Avatar : tmp.Value.ToString();
-                }
             }
 
             //return Content(test);
@@ -83,6 +79,27 @@ namespace XMUER.Pages.Private
             catch (Exception e)
             {
                 return Content(e.ToString());
+            }
+        }
+
+        private void getAvatarContent(int userId)
+        {
+            var avatar = from av in _db.Avatars
+                            where av.UserID == userId
+                         select av;
+            Avatar = avatar.ToList();
+            user = _db.Users.Find(userId);
+            if (avatar.Count() != 0)
+            {
+                user.Avatar = ".."+Url.Content(Avatar[0].Picture);
+            }
+            try
+            {
+                _db.Users.Update(user);
+                _db.SaveChanges();
+            }
+            catch (Exception e)
+            {
             }
         }
     }

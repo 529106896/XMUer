@@ -16,28 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `photo`
+-- Table structure for table `comment`
 --
 
-DROP TABLE IF EXISTS `photo`;
+DROP TABLE IF EXISTS `comment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `photo` (
+CREATE TABLE `comment` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `album_id` int NOT NULL,
-  `picture` varchar(64) DEFAULT NULL,
+  `user_id` int NOT NULL,
+  `status_id` int DEFAULT NULL,
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `photo`
+-- Dumping data for table `comment`
 --
 
-LOCK TABLES `photo` WRITE;
-/*!40000 ALTER TABLE `photo` DISABLE KEYS */;
-INSERT INTO `photo` VALUES (3,9,'~/album/xmu.png'),(5,5,'~/album/icon.jpg'),(12,10,'~/album/favicon.ico'),(13,10,'~/album/1.jpg'),(14,10,'~/album/1.jpg'),(15,10,'~/album/img-c54c5af0638b2412977b461b92a0e1df.jpg');
-/*!40000 ALTER TABLE `photo` ENABLE KEYS */;
+LOCK TABLES `comment` WRITE;
+/*!40000 ALTER TABLE `comment` DISABLE KEYS */;
+INSERT INTO `comment` VALUES (1,4,2,'wear大文件用个对话框jaw','2021-12-17 23:42:08'),(2,4,3,'这这这啊啊去','2021-12-17 23:44:09'),(3,5,2,'达瓦达瓦大','2021-12-18 00:39:13'),(4,7,8,'哈！','2021-12-20 21:56:57');
+/*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-20 22:39:56
+-- Dump completed on 2021-12-21  0:05:23

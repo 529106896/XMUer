@@ -10,6 +10,7 @@ using XMUER.Models.Home;
 using XMUER.Models.ModelsList;
 using XMUER.Service.Implement;
 using XMUER.Service.Interface;
+using System.IO;
 
 namespace XMUER.Controllers
 {
@@ -19,11 +20,14 @@ namespace XMUER.Controllers
     {
         protected readonly MyContext Context;
         protected readonly IUserService UserService;
+		protected IAvatarService AvatarService;
 
-        public UserController(IUserService userService, MyContext context)
+
+		public UserController(IUserService userService, MyContext context, IAvatarService avatarService)
         {
             UserService = userService;
             Context = context;
+			AvatarService = avatarService;
         }
 
 		[HttpGet("share")]
@@ -252,5 +256,42 @@ namespace XMUER.Controllers
             HttpContext.Session.Clear();
             return new Message((int)MessageCode.OK, MessageCode.OK.GetDescription());
         }
-    }
+
+		[HttpPost("avatar")]
+		public async Task<IActionResult> UploadAvatar(int id, IFormFile iFormFile)
+		{
+			string userId = HttpContext.Session.GetString("userId");
+			if (string.IsNullOrEmpty(userId))
+			{
+				return Redirect("/SignIn");
+			}
+
+			Message message = new Message();
+			if (iFormFile == null || iFormFile.Length == 0)
+				return new JsonResult(new Message((int)MessageCode.UPLOAD_FILE_EMPTY,
+					MessageCode.UPLOAD_FILE_EMPTY.GetDescription()));
+			var filePath = "wwwroot/avatar/" + iFormFile.FileName;
+			//Console.WriteLine(filePath);
+			//Console.WriteLine(iFormFile.FileName);
+			using (var stream = new FileStream(filePath, FileMode.Create))
+			{
+				await iFormFile.CopyToAsync(stream);
+			}
+			Avatar avatar = new Avatar();
+			avatar.Picture = "~/avatar/" + iFormFile.FileName;
+			avatar.UserID = int.Parse(userId);
+
+			//Album album = AlbumService.GetAlbumByID(id);
+			//AlbumService.ModefiyAlbumPictureByID(id, photo.Picture);
+			Avatar tempAvatar = new Avatar();
+			Message tempMessage = new Message();
+
+			tempAvatar = AvatarService.GetAvatarByUserID(int.Parse(userId));
+			if (tempAvatar != null && tempAvatar.ID != 0 && tempAvatar.Picture!=null)
+				tempMessage = AvatarService.DeleteAvatarById(tempAvatar.ID);
+
+			message = AvatarService.CreateAvatar(avatar);
+			return new JsonResult(message);
+		}
+	}
 }

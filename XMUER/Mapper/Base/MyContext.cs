@@ -11,6 +11,7 @@ namespace XMUER.Mapper.Base
     {
         public MyContext(DbContextOptions<MyContext> options) : base(options){}
 
+        public DbSet<Avatar> Avatars { get; set; }
 
         public DbSet<Album> Albums { get; set; }
 
