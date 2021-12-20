@@ -74,7 +74,7 @@ namespace XMUER.Pages
             // state为0表示未审核的新用户
             newUser.state = 0;
             newUser.birthday = new DateTime(2001, 1, 1);
-            newUser.Avatar = "../images/defaultAvatar.png";
+            newUser.Avatar = "../avatar/defaultAvatar.png";
             try
             {
                 _db.Users.Add(newUser);

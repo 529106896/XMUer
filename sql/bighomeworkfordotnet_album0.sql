@@ -16,28 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `photo`
+-- Table structure for table `album`
 --
 
-DROP TABLE IF EXISTS `photo`;
+DROP TABLE IF EXISTS `album`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `photo` (
+CREATE TABLE `album` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `album_id` int NOT NULL,
+  `user_id` int NOT NULL,
   `picture` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `photo`
+-- Dumping data for table `album`
 --
 
-LOCK TABLES `photo` WRITE;
-/*!40000 ALTER TABLE `photo` DISABLE KEYS */;
-INSERT INTO `photo` VALUES (3,9,'~/album/xmu.png'),(5,5,'~/album/icon.jpg'),(12,10,'~/album/favicon.ico'),(13,10,'~/album/1.jpg'),(14,10,'~/album/1.jpg'),(15,10,'~/album/img-c54c5af0638b2412977b461b92a0e1df.jpg');
-/*!40000 ALTER TABLE `photo` ENABLE KEYS */;
+LOCK TABLES `album` WRITE;
+/*!40000 ALTER TABLE `album` DISABLE KEYS */;
+INSERT INTO `album` VALUES (1,4,'~/album/timg.png','测试相册111'),(3,4,'../album/album2.png','相册相册'),(5,4,'../album/album3.png','测试测84512'),(7,4,'../album/album6.png','风景照'),(9,4,'../album/album5.png','84561'),(10,7,'../album/album2.png','test');
+/*!40000 ALTER TABLE `album` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-20 22:39:56
+-- Dump completed on 2021-12-21  0:05:24

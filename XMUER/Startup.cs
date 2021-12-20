@@ -53,11 +53,15 @@ namespace XMUER
             services.AddScoped<IAlbumRepository, AlbumRepository>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAvatarRepository, AvatarRepository>();
+
 
             //注册业务实现
             services.AddScoped<IAlbumService, AlbumService>();
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAvatarService, AvatarService>();
+
 
         }
 

@@ -11,18 +11,17 @@
         $('#mnuPersonalHome').addClass("active");
     })
 </script>
+@*上传文件相关 JS*@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
 <script>
-    function change() {
-        var select = document.getElementById("avatar");
-        var index = select.selectedIndex;
-        var showImage = document.getElementById("show");
-        if (index === 0)
-            showImage.src = "../images/defaultAvatar.png";
-        else
-            showImage.src = select.options[index].value;
-    }
+    $('document').ready(function () {
+        $('#fileUpload').fileinput({
+            showUpload: false,
+        })
+    })
 </script>
-
 <div class="row">
     <div class="col-4">
         @*名片*@
@@ -33,58 +32,80 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalCenterTitle">修改头像简介</h5>
+                                <h5 class="modal-title" id="exampleModalCenterTitle">修改头像</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <!--修改个人兴趣信息-->
+                            <!--修改头像信息-->
                             <div class="modal-body">
-                                <form method="post" enctype="multipart/form-data">
-                                    <div class="form-group row">
-                                        <label for="userAvatar" class="col-sm-3 col-form-label">头像</label>
-                                        <div class="col-sm-9">
-                                            <select class="custom-select my-1 mr-sm-2" id="avatar" asp-for="Avatar" onchange="change()">
-                                                <option selected>选择头像...</option>
-                                                <option value="../images/avatar1.png">头像1</option>
-                                                <option value="../images/avatar2.png">头像2</option>
-                                                <option value="../images/avatar3.png">头像3</option>
-                                                <option value="../images/avatar4.jpg">头像4</option>
-                                                <option value="../images/avatar5.jpg">头像5</option>
-                                                <option value="../images/avatar6.png">头像6</option>
-                                                <option value="../images/avatar7.png">头像7</option>
-                                                <option value="../images/defaultAvatar.png">默认头像</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="userDescription" class="col-sm-3 col-form-label">简介</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="description" placeholder="简介" asp-for="Description">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="userDescription" class="col-sm-3 col-form-label">头像预览</label>
-                                        <div class="col-sm-9">
-                                            <img id="show" class="card-img-top img-thumbnail" src=@Model.imgUrl alt="Card image cap">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-10" style="margin-left:65%">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                                            <button type="submit" class="btn btn-primary">修改</button>
-                                        </div>
-                                    </div>
+                                <form method="post" id="frmUploadAvatar" enctype="multipart/form-data">
+                                    <input type="file" name="iFormFile" accept="image/*" id="fileUpload" />
+                                    <hr />
+                                    <button type="button" class="btn btn-primary" id="btnSubmit">上传</button>
+                                </form>
+                            </div>
+                            <script>
+                                $('#btnSubmit').click(function () {
+                                    var formData = new FormData($('#frmUploadAvatar')[0])
+                                    console.log(formData)
+                                    $.ajax({
+                                        url: "/home/user/avatar",
+                                        type: 'post',
+                                        data: formData,
+                                        contentType: false,
+                                        processData: false,
+                                        success: function (data) {
+                                            if (true == data.success) {
+                                                alert("上传成功。");
+                                                window.location.href = "/Private/UserHome";
+                                            } else {
+                                                alert("上传失败,返回成功，因为：" + data.msg);
+                                                window.location.href = "/Private/UserHome";
+                                            }
+                                        },
+                                        error: function (data) {
+                                            if (true == data.success) {
+                                                alert("上传成功。");
+                                                window.location.href = "/Private/UserHome";
+                                            } else {
+                                                alert("上传失败，返回失败，因为：" + data.msg);
+                                                window.location.href = "/Private/UserHome";
+                                            }
+                                        }
+                                    });
+                                })
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="exampleModalCenter5" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">修改简介</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <!--修改简介信息-->
+                            <div class="modal-body">
+                                <form method="post" id="frmUploadAvatar" enctype="multipart/form-data">
+                                    <input type="text" class="form-control" id="description" placeholder="简介" asp-for="Description">
+                                    <hr />
+                                    <button type="submit" class="btn btn-primary" id="btnSubmit">修改</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <h5 class="card-title">@Model.WelcomeMessage</h5>
                 <h6 class="card-subtitle mb-2 text-muted">@Model.Email</h6>
                 <h5 class="card-subtitle mb-2 text-muted">就读于 @Model.StudySchool</h5>
                 <p id="userDescription" class="card-text">@Model.Description</p>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter4">修改</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter4">修改头像</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter5">修改简介</button>
             </div>
         </div>
         @*最近来访*@
@@ -93,9 +114,9 @@
                 最近访客 <strong>3</strong>
             </div>
             <div class="card-body">
-                <img src="~/images/defaultAvatar.png" alt="..." class="img-thumbnail" style="max-width: 15%; margin-left:5px">
-                <img src="~/images/defaultAvatar.png" alt="..." class="img-thumbnail" style="max-width: 15%; margin-left:5px">
-                <img src="~/images/defaultAvatar.png" alt="..." class="img-thumbnail" style="max-width: 15%; margin-left:5px">
+                <img src="~/avatar/defaultAvatar.png" alt="..." class="img-thumbnail" style="max-width: 15%; margin-left:5px">
+                <img src="~/avatar/defaultAvatar.png" alt="..." class="img-thumbnail" style="max-width: 15%; margin-left:5px">
+                <img src="~/avatar/defaultAvatar.png" alt="..." class="img-thumbnail" style="max-width: 15%; margin-left:5px">
             </div>
         </div>
     </div>
@@ -141,20 +162,20 @@
             </div>
             <div class="card-body">
                 @{ if (@Model.Comments.Count > 0)
-                   {
-                       foreach (var item in @Model.Comments)
-                       {
-                        <div class="alert alert-primary" role="alert">
-                            @item
-                        </div>
-                       }
-                   }
-                   else
-                   {
-                    <p class="card-text">
-                        你最近没有留言
-                    </p>
-                   } }
+                    {
+                        foreach (var item in @Model.Comments)
+                        {
+                            <div class="alert alert-primary" role="alert">
+                                @item
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="card-text">
+                            你最近没有留言
+                        </p>
+                    } }
                 <a href="#" class="btn btn-primary">查看历史留言记录</a>
             </div>
         </div>

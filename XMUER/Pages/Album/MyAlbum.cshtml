@@ -56,6 +56,7 @@
                     .options[document.getElementById("selAlbum").selectedIndex].value;
 
                 var formData = new FormData($('#frmUploadPhoto')[0])
+                console.log(formData)
 
                 $.ajax({
                     url: "/home/album/" + albumId,
