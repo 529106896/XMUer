@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
 -- Host: localhost    Database: bighomeworkfordotnet
 -- ------------------------------------------------------
--- Server version	8.0.25
+-- Server version	8.0.23
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,7 +27,7 @@ CREATE TABLE `avatar` (
   `user_id` int NOT NULL,
   `picture` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `avatar` (
 
 LOCK TABLES `avatar` WRITE;
 /*!40000 ALTER TABLE `avatar` DISABLE KEYS */;
-INSERT INTO `avatar` VALUES (3,2,'~/album/xmu.png'),(24,7,'~/avatar/1.jpg'),(25,8,'~/avatar/img-c54c5af0638b2412977b461b92a0e1df.jpg');
+INSERT INTO `avatar` VALUES (3,2,'~/album/xmu.png'),(25,8,'~/avatar/img-c54c5af0638b2412977b461b92a0e1df.jpg'),(26,7,'~/avatar/6.jpg'),(30,4,'~/avatar/icon.jpg');
 /*!40000 ALTER TABLE `avatar` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-20 22:39:57
+-- Dump completed on 2021-12-21 14:23:32

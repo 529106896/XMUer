@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
 -- Host: localhost    Database: bighomeworkfordotnet
 -- ------------------------------------------------------
--- Server version	8.0.25
+-- Server version	8.0.23
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -53,7 +53,7 @@ CREATE TABLE `user` (
   `home_page_description` varchar(128) DEFAULT NULL,
   `md5_password` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (0,'admin','123456',1,0,'管理员',1,'2000-01-01','厦门','admin@admin.com','123456','厦门大学','厦门一中','厦门附中','厦大附小','音乐','书','电影','游戏','动画','体育','其他','110','信息学院','软件工程系','软件工程','/avatar/avatar1.png',NULL,'49BA59ABBE56E057'),(1,'test','1234',0,1,NULL,1,'2000-01-01',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'52D04DC20036DBD8'),(2,'test1','12345Ab',0,1,NULL,1,'2000-01-01',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'A32B9564BB84C412'),(4,'yuanjiazhe','123456',1,1,'袁佳哲',1,'2001-08-11','河南省济源市','529106896@qq.com','18603899634','厦门大学','济源一中','北海中学','下街小学','Wake','Java How to Program','肖申克的救赎','Minecraft','JOJO的奇妙冒险','跑步','暂无','11920192203642','信息学院','软件工程系','软件工程','/avatar/avatar5.jpg','这喝汤，多是一件美事啊','49BA59ABBE56E057'),(5,'testtest','123456',1,1,'李云龙',1,'2001-02-16','','','','华中科技大学','武大附属中学','人民初中','人民小学',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2356453','信息学院','计算机技术与科学系','计算机','/avatar/avatar7.png','二营长，你他娘的意大利炮呢','49BA59ABBE56E057'),(6,'testmd5','qq6666774',1,1,NULL,0,'2001-01-01',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'/avatar/defaultAvatar.png',NULL,'38DFA0AC509CC803'),(7,'lyx','123456',1,1,'李逸萱',0,'2001-01-01','','','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'222','信息学院','软件工程','软件工程','/avatar/1.jpg','午睡中','49BA59ABBE56E057'),(8,'lyx2','123456',1,1,'李逸萱2',0,'2001-01-01','','','','厦门大学','','','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'111','信息学院','软件工程','软件工程','/avatar/6.jpg',NULL,'49BA59ABBE56E057');
+INSERT INTO `user` VALUES (0,'admin','123456',1,0,'管理员',1,'2000-01-01','厦门','admin@admin.com','123456','厦门大学','厦门一中','厦门附中','厦大附小','音乐','书','电影','游戏','动画','体育','其他','110','信息学院','软件工程系','软件工程','../avatar/avatar1.png',NULL,'49BA59ABBE56E057'),(1,'test','1234',0,1,NULL,1,'2000-01-01',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'52D04DC20036DBD8'),(2,'test1','12345Ab',0,1,NULL,1,'2000-01-01',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'A32B9564BB84C412'),(4,'yuanjiazhe','123456',1,1,'袁佳哲',1,'2001-08-11','河南省济源市','529106896@qq.com','18603899634','厦门大学','济源一中','北海中学','下街小学','Wake','Java How to Program','肖申克的救赎','Minecraft','JOJO的奇妙冒险','跑步','暂无','11920192203642','信息学院','软件工程系','软件工程','../avatar/icon.jpg','这喝汤，多是一件美事啊','49BA59ABBE56E057'),(5,'testtest','123456',1,1,'李云龙',1,'2001-02-16','','','','华中科技大学','武大附属中学','人民初中','人民小学',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2356453','信息学院','计算机技术与科学系','计算机','../avatar/avatar7.png','二营长，你他娘的意大利炮呢','49BA59ABBE56E057'),(6,'testmd5','qq6666774',1,1,NULL,0,'2001-01-01',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'../avatar/defaultAvatar.png',NULL,'38DFA0AC509CC803'),(7,'lyx','123456',1,1,'李逸萱',0,'2001-01-01','','','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'222','信息学院','软件工程','软件工程','../avatar/6.jpg','午睡中','49BA59ABBE56E057'),(8,'lyx2','123456',1,1,'李逸萱2',0,'2001-01-01','','','','厦门大学','','','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'111','信息学院','软件工程','软件工程','../avatar/6.jpg',NULL,'49BA59ABBE56E057');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -75,4 +75,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-20 22:39:57
+-- Dump completed on 2021-12-21 14:23:32
