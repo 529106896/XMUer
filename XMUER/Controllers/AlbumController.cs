@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,21 @@ namespace XMUER.Controllers
             PhotoService = photoService;
         }
 
+        public String getRandomString(int length)
+        {
+            String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            Random random = new Random();
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < length; i++)
+            {
+                int num = random.Next(str.Length);
+                sb.Append(str[num]);
+            }
+
+            return sb.ToString();
+        }
+
         [HttpPost("{id}")]
         public async Task<IActionResult> UploadPhoto(int id, IFormFile iFormFile)
         {
@@ -38,7 +54,10 @@ namespace XMUER.Controllers
             if (iFormFile == null || iFormFile.Length == 0)
                 return new JsonResult(new Message((int)MessageCode.UPLOAD_FILE_EMPTY,
                     MessageCode.UPLOAD_FILE_EMPTY.GetDescription()));
-            var filePath = "wwwroot/album/" + iFormFile.FileName;
+            String randomFileName = getRandomString(16);
+            randomFileName += iFormFile.FileName.Substring(iFormFile.FileName.Length - 4);
+            //var filePath = "wwwroot/album/" + iFormFile.FileName;
+            var filePath = "wwwroot/album/" + randomFileName;
             //Console.WriteLine(filePath);
             //Console.WriteLine(iFormFile.FileName);
             using (var stream = new FileStream(filePath, FileMode.Create))
@@ -46,7 +65,8 @@ namespace XMUER.Controllers
                 await iFormFile.CopyToAsync(stream);
             }
             Photo photo = new Photo();
-            photo.Picture = "~/album/" + iFormFile.FileName;
+            //photo.Picture = "~/album/" + iFormFile.FileName;
+            photo.Picture = "~/album/" + randomFileName;
             photo.AlbumID = id;
 
             //Album album = AlbumService.GetAlbumByID(id);
@@ -106,6 +126,16 @@ namespace XMUER.Controllers
             if (string.IsNullOrEmpty(userId))
             {
                 return Redirect("/SignIn");
+            }
+
+            //Album targetAlbum = AlbumService.GetAlbumByID(id);
+            IEnumerable<Photo> photos = PhotoService.GetPhotosByAlbumID(id);
+            if (photos != null)
+            {
+                foreach (var photo in photos)
+                {
+                    delPhoto(photo.ID);
+                }
             }
 
             Message msg = AlbumService.DeleteAlbumByID(id);
