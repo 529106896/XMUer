@@ -42,7 +42,7 @@ namespace XMUER.Pages.Private
             userId = Convert.ToInt32(tmp);
             getAvatarContent(userId);
             user = _db.Users.Find(userId);
-            WelcomeMessage = user.userName;
+            WelcomeMessage = user.realName ?? "匿名用户";
             StudySchool = user.university != null ? user.university : "匿名学校";
             Email = user.email;
             Department = user.Department;

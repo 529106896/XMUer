@@ -69,7 +69,8 @@
 </div>
 
 @*评论功能*@
-<script>$('.btnSubmitComment').click(function () {
+<script>
+$('.btnSubmitComment').click(function () {
             var shareId = $(this).val();
             var comment = $('#commentText-' + shareId).val();
             var formData = new FormData();
@@ -83,15 +84,19 @@
                 success: function (data) {
                     if (true == data.success) {
                         alert("评论成功");
+                        window.location.href = "/Status/Status?shareId=" + @Model.Share.ID;
                     } else {
                         alert("评论失败，因为：" + data.msg);
+                        window.location.href = "/Status/Status?shareId=" + @Model.Share.ID;
                     }
                 },
                 error: function (data) {
                     if (true == data.success) {
                         alert("评论成功");
+                        window.location.href = "/Status/Status?shareId=" + @Model.Share.ID;
                     } else {
                         alert("评论失败，因为：" + data.msg);
+                        window.location.href = "/Status/Status?shareId=" + @Model.Share.ID;
                     }
                 }
             });
