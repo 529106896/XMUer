@@ -100,6 +100,7 @@ namespace XMUER.Pages.Private
             }
             catch (Exception e)
             {
+                System.Diagnostics.Debug.Write(e);
             }
         }
     }
