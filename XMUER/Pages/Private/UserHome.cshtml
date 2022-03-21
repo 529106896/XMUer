@@ -45,37 +45,6 @@
                                     <button type="button" class="btn btn-primary" id="btnSubmit">上传</button>
                                 </form>
                             </div>
-                            <script>
-                                $('#btnSubmit').click(function () {
-                                    var formData = new FormData($('#frmUploadAvatar')[0])
-                                    console.log(formData)
-                                    $.ajax({
-                                        url: "/home/user/avatar",
-                                        type: 'post',
-                                        data: formData,
-                                        contentType: false,
-                                        processData: false,
-                                        success: function (data) {
-                                            if (true == data.success) {
-                                                alert("上传成功。");
-                                                window.location.href = "/Private/UserHome";
-                                            } else {
-                                                alert("上传失败,返回成功，因为：" + data.msg);
-                                                window.location.href = "/Private/UserHome";
-                                            }
-                                        },
-                                        error: function (data) {
-                                            if (true == data.success) {
-                                                alert("上传成功。");
-                                                window.location.href = "/Private/UserHome";
-                                            } else {
-                                                alert("上传失败，返回失败，因为：" + data.msg);
-                                                window.location.href = "/Private/UserHome";
-                                            }
-                                        }
-                                    });
-                                })
-                            </script>
                         </div>
                     </div>
                 </div>
@@ -130,26 +99,32 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm">
-                            <svg class="bi bi-chat-square-dots text-success" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.5a2 2 0 0 1 1.6.8L8 14.333 9.9 11.8a2 2 0 0 1 1.6-.8H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-                                <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
-                            </svg>
-                            <p class="card-text"><a href='../Status/StatusList@(HttpContext.Request.Query.ContainsKey("id")?"?id=" + HttpContext.Request.Query["id"]:"")' class="btn">状态</a></p>
+                            <a href='../Status/StatusList@(HttpContext.Request.Query.ContainsKey("id")?"?id=" + HttpContext.Request.Query["id"]:"")' class="btn">
+                                <svg class="bi bi-chat-square-dots text-success" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.5a2 2 0 0 1 1.6.8L8 14.333 9.9 11.8a2 2 0 0 1 1.6-.8H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                    <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                </svg>
+                            </a>
+                                <p class="card-text"><a href='../Status/StatusList@(HttpContext.Request.Query.ContainsKey("id")?"?id=" + HttpContext.Request.Query["id"]:"")' class="btn">状态</a></p>
                         </div>
                         <div class="col-sm">
-                            <svg class="bi bi-image text-warning" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M14.002 2h-12a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1zm-12-1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12z" />
-                                <path d="M10.648 7.646a.5.5 0 0 1 .577-.093L15.002 9.5V14h-14v-2l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71z" />
-                                <path fill-rule="evenodd" d="M4.502 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
-                            </svg>
-                            <p class="card-text"><a href="/home/album" class="btn">那些照片</a></p>
+                            <a href='../home/album@(HttpContext.Request.Query.ContainsKey("id")?"?id=" + HttpContext.Request.Query["id"]:"")' class="btn">
+                                <svg class="bi bi-image text-warning" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M14.002 2h-12a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1zm-12-1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12z" />
+                                    <path d="M10.648 7.646a.5.5 0 0 1 .577-.093L15.002 9.5V14h-14v-2l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71z" />
+                                    <path fill-rule="evenodd" d="M4.502 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+                                </svg>
+                            </a>
+                                <p class="card-text"><a href='../home/album@(HttpContext.Request.Query.ContainsKey("id")?"?id=" + HttpContext.Request.Query["id"]:"")' class="btn">那些照片</a></p>
                         </div>
                         <div class="col-sm">
-                            <svg class="bi bi-book text-info" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M3.214 1.072C4.813.752 6.916.71 8.354 2.146A.5.5 0 0 1 8.5 2.5v11a.5.5 0 0 1-.854.354c-.843-.844-2.115-1.059-3.47-.92-1.344.14-2.66.617-3.452 1.013A.5.5 0 0 1 0 13.5v-11a.5.5 0 0 1 .276-.447L.5 2.5l-.224-.447.002-.001.004-.002.013-.006a5.017 5.017 0 0 1 .22-.103 12.958 12.958 0 0 1 2.7-.869zM1 2.82v9.908c.846-.343 1.944-.672 3.074-.788 1.143-.118 2.387-.023 3.426.56V2.718c-1.063-.929-2.631-.956-4.09-.664A11.958 11.958 0 0 0 1 2.82z" />
-                                <path fill-rule="evenodd" d="M12.786 1.072C11.188.752 9.084.71 7.646 2.146A.5.5 0 0 0 7.5 2.5v11a.5.5 0 0 0 .854.354c.843-.844 2.115-1.059 3.47-.92 1.344.14 2.66.617 3.452 1.013A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.276-.447L15.5 2.5l.224-.447-.002-.001-.004-.002-.013-.006-.047-.023a12.582 12.582 0 0 0-.799-.34 12.96 12.96 0 0 0-2.073-.609zM15 2.82v9.908c-.846-.343-1.944-.672-3.074-.788-1.143-.118-2.387-.023-3.426.56V2.718c1.063-.929 2.631-.956 4.09-.664A11.956 11.956 0 0 1 15 2.82z" />
-                            </svg>
-                            <p class="card-text"><a href="#" class="btn">我的故事</a></p>
+                            <a href='../home/user/college?value=信息学院@(HttpContext.Request.Query.ContainsKey("id")?"?id=" + HttpContext.Request.Query["id"]:"")' class="btn">
+                                <svg class="bi bi-book text-info" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M3.214 1.072C4.813.752 6.916.71 8.354 2.146A.5.5 0 0 1 8.5 2.5v11a.5.5 0 0 1-.854.354c-.843-.844-2.115-1.059-3.47-.92-1.344.14-2.66.617-3.452 1.013A.5.5 0 0 1 0 13.5v-11a.5.5 0 0 1 .276-.447L.5 2.5l-.224-.447.002-.001.004-.002.013-.006a5.017 5.017 0 0 1 .22-.103 12.958 12.958 0 0 1 2.7-.869zM1 2.82v9.908c.846-.343 1.944-.672 3.074-.788 1.143-.118 2.387-.023 3.426.56V2.718c-1.063-.929-2.631-.956-4.09-.664A11.958 11.958 0 0 0 1 2.82z" />
+                                    <path fill-rule="evenodd" d="M12.786 1.072C11.188.752 9.084.71 7.646 2.146A.5.5 0 0 0 7.5 2.5v11a.5.5 0 0 0 .854.354c.843-.844 2.115-1.059 3.47-.92 1.344.14 2.66.617 3.452 1.013A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.276-.447L15.5 2.5l.224-.447-.002-.001-.004-.002-.013-.006-.047-.023a12.582 12.582 0 0 0-.799-.34 12.96 12.96 0 0 0-2.073-.609zM15 2.82v9.908c-.846-.343-1.944-.672-3.074-.788-1.143-.118-2.387-.023-3.426.56V2.718c1.063-.929 2.631-.956 4.09-.664A11.956 11.956 0 0 1 15 2.82z" />
+                                </svg>
+                            </a>
+                            <p class="card-text"><a href='../home/user/college?value=信息学院@(HttpContext.Request.Query.ContainsKey("id")?"?id=" + HttpContext.Request.Query["id"]:"")' class="btn">找同学</a></p>
                         </div>
                     </div>
                 </div>
@@ -181,3 +156,35 @@
         </div>
     </div>
 </div>
+@*上传头像按钮事件*@
+<script>
+    $('#btnSubmit').click(function () {
+        var formData = new FormData($('#frmUploadAvatar')[0])
+        console.log(formData)
+        $.ajax({
+            url: "/home/user/avatar",
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (true == data.success) {
+                    alert("上传成功。");
+                    window.location.href = "/Private/UserHome";
+                } else {
+                    alert("上传失败,返回成功，因为：" + data.msg);
+                    window.location.href = "/Private/UserHome";
+                }
+            },
+            error: function (data) {
+                if (true == data.success) {
+                    alert("上传成功。");
+                    window.location.href = "/Private/UserHome";
+                } else {
+                    alert("上传失败，返回失败，因为：" + data.msg);
+                    window.location.href = "/Private/UserHome";
+                }
+            }
+        });
+    })
+</script>
